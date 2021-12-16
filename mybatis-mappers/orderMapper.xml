@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- order -->
+<mapper namespace="com.orderdish.dao.OrderDao">
+
+    <!-- 字段映射 -->
+    <resultMap id="orderMap" type="com.orderdish.model.Order">
+        <id column="order_id" property="orderId" jdbcType="INTEGER" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="subtotal" property="subtotal" jdbcType="INTEGER" />
+        <result column="table_number" property="tableNumber" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!-- 表查询字段 -->
+    <sql id="allColumns">
+        o.order_id, o.time, o.subtotal, o.table_number, o.user_id
+    </sql>
+
+
+<!--    &lt;!&ndash; 查询所有 &ndash;&gt;-->
+<!--    <select id="findOrderAll" resultMap="orderMap">-->
+<!--        SELECT-->
+<!--            <include refid="allColumns" />-->
+<!--        FROM order o-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据条件参数查询列表 &ndash;&gt;-->
+<!--    <select id="findOrderByCondition" resultMap="orderMap" parameterType="map">-->
+<!--        SELECT-->
+<!--            <include refid="allColumns" />-->
+<!--        FROM order o WHERE 1 = 1-->
+<!--        <if test="time != null">-->
+<!--            AND o.time = #{time}-->
+<!--        </if>-->
+<!--        <if test="subtotal != null">-->
+<!--            AND o.subtotal = #{subtotal}-->
+<!--        </if>-->
+<!--        <if test="tableNumber != null">-->
+<!--            AND o.table_number = #{tableNumber}-->
+<!--        </if>-->
+<!--        <if test="userId != null">-->
+<!--            AND o.user_id = #{userId}-->
+<!--        </if>-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 根据主键查询信息 &ndash;&gt;-->
+<!--    <select id="findOrderById" resultMap="orderMap" parameterType="list">-->
+<!--        SELECT-->
+<!--            <include refid="allColumns" />-->
+<!--        FROM order o WHERE o.order_id = #{orderId}-->
+<!--    </select>-->
+
+
+
+<!--    &lt;!&ndash; 修改信息 &ndash;&gt;-->
+<!--    <update id="updateOrder">-->
+<!--        UPDATE order-->
+<!--        <set>-->
+<!--            <if test="time != null">-->
+<!--                time = #{time},-->
+<!--            </if>-->
+<!--            <if test="subtotal != null">-->
+<!--                subtotal = #{subtotal},-->
+<!--            </if>-->
+<!--            <if test="tableNumber != null">-->
+<!--                table_number = #{tableNumber},-->
+<!--            </if>-->
+<!--            <if test="userId != null">-->
+<!--                user_id = #{userId}-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        WHERE order_id = #{orderId}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 根据主键删除 &ndash;&gt;-->
+<!--    <delete id="deleteOrderById" parameterType="int">-->
+<!--        DELETE FROM order WHERE order_id = #{orderId}-->
+<!--    </delete>-->
+
+</mapper>

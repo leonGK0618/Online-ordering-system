@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title></title>
+	<link th:href="@{/before/mui.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/index.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/fonts/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/common.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/cart.css}" />
+	<style>
+		.area{ margin: 20px auto 0px auto;}
+		.mui-input-group{ margin-top: 10px;}
+		.mui-input-group:first-child{ margin-top: 20px;}
+		.mui-input-group label{ width: 22%;}
+		.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{ width: 78%;}
+		.mui-checkbox input[type=checkbox], .mui-radio input[type=radio]{ top: 6px;}
+		.mui-content-padded{ margin-top: 25px;}
+		.mui-btn{ padding: 10px;}
+		.link-area{ display: block; margin-top: 25px; text-align: center;}
+		.spliter{ color: #bbb; padding: 0px 8px;}
+		.oauth-area{ position: absolute; bottom: 20px; left: 0px; text-align: center; width: 100%; padding: 0px; margin: 0px;}
+		.oauth-area .oauth-btn{ display: inline-block; width: 50px; height: 50px; background-size: 30px 30px; background-position: center center; background-repeat: no-repeat; margin: 0px 20px;
+			border: solid 1px #ddd; border-radius: 25px;}
+		.oauth-area .oauth-btn:active{ border: solid 1px #aaa;}
+		.oauth-area .oauth-btn.disabled{ background-color: #ddd;}
+
+	</style>
+</head>
+
+<body>
+<div class="mui-content">
+	<div class="mui-row title">
+		<div class="mui-col-xs-6">
+			<a class="mui-icon iconfont icon-fanhui mui-pull-left" 	href="javascript:history.back();void(0)"></a>
+		</div>
+		<div class="mui-col-xs-2 bt" onclick="location.href = '/before/index'">
+			Home
+		</div>
+		<div class="mui-col-xs-2 bt">
+			Order
+		</div>
+		<div class="mui-col-xs-2 bt">
+			Contact
+		</div>
+	</div>
+	<div class="mui-content" th:each="order:${orderList}">
+		<ul id="OA_task" class="mui-table-view card-view mb10" style="border-bottom: 1px solid #ddd;">
+			<li class="mui-table-view-cell mui-media">
+				<div class="mui-slider-handle">
+					<div class="card-right">
+						<img class="mui-media-object mui-pull-left menu-image" th:src="${order.dishImage}"/>
+						<div class="mui-media-body">
+							<p class="mui-ellipsis-2 tit" style="font-size: 20px" th:text="${order.dishName}">Coke</p>
+							<div class="actions"><span class="red" style="margin-top: 20px" th:text="${order.price}">3</span>
+								<div class="mui-numbox" data-numbox-min="0" style="line-height: 30px">
+									<input class="mui-input-numbox" disabled type="number" th:value="${order.dishQuantity}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="mui-content">
+	<p style="font-size: 26px">Payment successful, please wait....</p>
+</div>
+
+<script th:src="@{/before/js/mui.min.js}"></script>
+<script th:src="@{/before/js/jquery-1.3.2.min.js}"></script>
+</body>
+<script>
+</script>
+</html>

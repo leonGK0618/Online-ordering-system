@@ -1,0 +1,96 @@
+<!doctype html>
+<html class="x-sysUser-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Management</title>
+    <header th:replace="header::html"></header>
+</head>
+<body class="index">
+<!-- top -->
+<div class="container">
+    <div class="logo">
+        <a href="index.html">Management</a></div>
+    <div class="left_open">
+        <a><i title="open left" class="iconfont">&#xe699;</i></a>
+    </div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" id="show_username">sysUser</a>
+            <dl class="layui-nav-child">
+                <!-- sub class -->
+                <dd>
+                    <a onclick="logout()">Log out</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item to-index">
+            <a href="/">Home</a></li>
+    </ul>
+</div>
+<!-- top end -->
+<!-- milldle -->
+<!-- left menu -->
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+            <li>
+                <a href="javascript:;" onclick="xadmin.add_tab('Dish type','/api/getPage?pageName=dishType/dishType-list')">
+                    <i class="iconfont left-nav-li" lay-tips="Dish type">&#xe723;</i>
+                    <cite>Dish type</cite>
+                    <i class="iconfont">&#xe6a7;</i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="xadmin.add_tab('Dish','/api/getPage?pageName=menu/menu-list')">
+                    <i class="iconfont left-nav-li" lay-tips="Dish">&#xe723;</i>
+                    <cite>Dish</cite>
+                    <i class="iconfont">&#xe6a7;</i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="xadmin.add_tab('Order','/api/getPage?pageName=order/order-list')">
+                    <i class="iconfont left-nav-li" lay-tips="Order">&#xe723;</i>
+                    <cite>Order</cite>
+                    <i class="iconfont">&#xe6a7;</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- <div class="x-slide_left"></div> -->
+<!-- left menu end -->
+<!-- right main -->
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+        <ul class="layui-tab-title">
+            <li class="home">
+                <i class="layui-icon">&#xe68e;</i>My account
+            </li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src='' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content-bg"></div>
+<style id="theme_style"></style>
+<!-- right main end -->
+<!-- milldle end -->
+<script>
+    $(document).ready(function () {
+        var username = localStorage.getItem("username");
+        if(username ==null || username == undefined){
+            console.log(username)
+            location.href='/login.html';
+        }
+        $("#show_username").text(username);
+    })
+    function logout() {
+        localStorage.removeItem("username")
+        location.href = '/logout';
+    }
+</script>
+</body>
+
+</html>

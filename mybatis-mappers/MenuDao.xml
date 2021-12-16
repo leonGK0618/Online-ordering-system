@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dish -->
+<mapper namespace="com.orderdish.dao.MenuDao">
+
+    <!-- 修改信息 -->
+    <update id="update">
+        UPDATE menu
+        <set>
+            <if test="dishName != null">
+                dish_name = #{dishName},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction},
+            </if>
+            <if test="dishImage != null">
+                dish_image = #{dishImage},
+            </if>
+            <if test="price != null">
+                price = #{price}
+            </if>
+        </set>
+        WHERE dish_id = #{dishId}
+    </update>
+    <select id="countByDishName" resultType="java.lang.Long">
+        select count(*) from menu m
+        left join dish_type d on m.type_id = d.type_id
+        <where>
+            <if test="dishName != null and dishName != ''">
+                and dish_name like '%${dishName}%'
+            </if>
+            <if test="typeId != null">
+                and m.type_id  = #{typeId}
+            </if>
+        </where>
+    </select>
+    <select id="findMenuByFuzzyName" resultType="com.orderdish.dto.MenuDto">
+        select * from menu m
+        left join dish_type d on m.type_id = d.type_id
+        <where>
+            <if test="dishName != null and dishName != ''">
+               and dish_name like '%${dishName}%'
+            </if>
+            <if test="typeId != null">
+                and m.type_id = #{typeId}
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+</mapper>

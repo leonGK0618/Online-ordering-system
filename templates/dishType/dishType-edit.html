@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload dish type</title>
+    <header th:replace="header::html"></header>
+</head>
+
+<body>
+<div class="x-body" style="width:50%;height:50%;margin:100px auto;border: 1px solid #3a3a3a;padding: 30px 0 30px 0;border-radius: 5px">
+    <form class="layui-form">
+        <input name="typeId" th:value="${dishType.typeId}" hidden>
+        <div class="layui-form-item">
+            <label for="typeName" class="layui-form-label">
+                <span class="x-red">*</span>Dish name
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="typeName" name="typeName" lay-verify="required" th:value="${dishType.typeName}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <input id="dishTypeImage" name="typeImage" th:value="${dishType.typeImage}" hidden>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="upload">
+                    <i class="layui-icon">&#xe67c;</i>Upload
+                </button>
+                <div style="width:200px;height:200px;border:3px solid #0099CC;border-radius: 5px;padding: 3px;">
+                    <img th:src="${dishType.typeImage}" style="max-width: 200px;max-height:200px;" id="preview">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button class="layui-btn" lay-filter="update" lay-submit="">
+                Upload
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form','layer', 'laydate','upload'], function(){
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,upload = layui.upload;
+        //submit
+        form.on('submit(update)', function(data){
+            console.log(data.field)
+            $.ajax({
+                url:"/dishType/update",
+                type:"POST",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify(data.field),
+                dataType:'json',
+                success:function(result){
+                    if(result.code == 500 || result.code == 5000100 || result.code == 5000101 || result.code == 5000102){
+                        layer.alert(result.msg);
+                    }else{
+                        layer.alert("Setup successful", {icon: 6},function () {
+
+                            xadmin.close();
+
+                            xadmin.father_reload();
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+        upload.render({
+            elem: '#upload',
+            url: '/dishType/upload',
+            accept: 'file',
+            //back the upload
+            before: function () {
+            },
+            //choose a file
+            choose: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#preview').attr('src', result);
+                })
+            },
+            //successful
+            done: function (res) {
+                if(res.code == 200){
+                    layer.alert('Upload successful！' ,{icon:6});
+                    $("input[name='typeImage']").val("/image/"+res.data.typeImage);
+                }
+            },
+            //fail
+            error: function (index, upload) {
+                layer.alert('Upload failed！' + index);
+            }
+        });
+    });
+</script>
+</body>
+</html>

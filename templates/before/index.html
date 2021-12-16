@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title></title>
+	<link th:href="@{/before/mui.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/index.css}" />
+</head>
+
+<body>
+<div class="mui-content">
+	<a class="mui-icon iconfont icon-fanhui mui-pull-left" href="javascript:history.back();void(0)"></a>
+	<div class="mui-row title">
+		<div class="mui-col-xs-6">
+		</div>
+		<div class="mui-col-xs-2 bt" onclick="location.href = '/before/index'">
+			Home
+		</div>
+		<div class="mui-col-xs-2 bt">
+			Order
+		</div>
+		<div class="mui-col-xs-2 bt">
+			Contact
+		</div>
+	</div>
+	<div id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- One additional node added (circular rotation: the first node is the last rotation) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="#">
+					<img th:src="@{/before/images/beef.jpg}">
+				</a>
+			</div>
+			<!-- one -->
+			<div class="mui-slider-item">
+				<a href="#">
+					<img th:src="@{/before/images/beef.jpg}">
+				</a>
+			</div>
+			<!-- two -->
+			<div class="mui-slider-item">
+				<a href="#">
+					<img th:src="@{/before/images/mushroom.jpg}">
+				</a>
+			</div>
+			<!-- three -->
+			<div class="mui-slider-item">
+				<a href="#">
+					<img th:src="@{/before/images/home page.jpg}">
+				</a>
+			</div>
+			<!-- four -->
+			<div class="mui-slider-item">
+				<a href="#">
+					<img th:src="@{/before/images/home page2.jpg}">
+				</a>
+			</div>
+			<!-- One additional node added (circular rotation: the last node is the first rotation) -->
+			<div class="mui-slider-item mui-slider-item-duplicate">
+				<a href="#">
+					<img th:src="@{/before/images/home page2.jpg}">
+				</a>
+			</div>
+		</div>
+		<div class="mui-slider-indicator">
+			<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+		</div>
+	</div>
+	<div style="margin: 0.3rem; text-align: center" th:each="type : ${typeList}">
+		<ul class="mui-table-view mui-grid-view ">
+			<li class="mui-table-view-cell mui-media product-list">
+				<a th:href="'/before/getMenuByType/'+${type.typeId}">
+					<img class="mui-media-object" th:src="${type.typeImage}">
+					<div class="mui-media-body" style="padding-left: 20px" th:text="${type.typeName}">Looks great</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="footer">---------END---------</div>
+</div>
+<script th:src="@{/before/js/mui.min.js}"></script>
+<script type="text/javascript" charset="utf-8">
+    var slider = mui("#slider");
+</script>
+</body>
+
+</html>

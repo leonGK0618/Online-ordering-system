@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload dish</title>
+    <header th:replace="header::html"></header>
+</head>
+
+<body>
+<div class="x-body" style="width:50%;height:50%;margin:100px auto;border: 1px solid #3a3a3a;padding: 30px 0 30px 0;border-radius: 5px">
+    <form class="layui-form">
+        <input name="dishId" th:value="${menu.dishId}" hidden>
+        <div class="layui-form-item">
+            <label for="dishName" class="layui-form-label">
+                <span class="x-red">*</span>Dish name
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="dishName" name="dishName" lay-verify="required" th:value="${menu.dishName}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="price" class="layui-form-label">
+                <span class="x-red">*</span>Price
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="price" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" th:value="${menu.price}" name="price" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="selectType" class="layui-form-label">
+                <span class="x-red">*</span>Type
+            </label>
+            <input id="typeId" name="typeId" th:value="${menu.typeId}" hidden>
+            <div class="layui-input-inline">
+                <select id="selectType" name="typeId" lay-filter="type" lay-verify="required">
+                    <option value="-1">Select</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="introduction" class="layui-form-label">
+                <span class="x-red">*</span>Description
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="introduction" name="introduction" lay-verify="required" th:value="${menu.introduction}" class="layui-input"/>
+            </div>
+        </div>
+        <input id="dishImage" name="dishImage" th:value="${menu.dishImage}" hidden>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="upload">
+                    <i class="layui-icon">&#xe67c;</i>Update
+                </button>
+                <div style="width:200px;height:200px;border:3px solid #0099CC;border-radius: 5px;padding: 3px;">
+                    <img th:src="${menu.dishImage}" style="max-width: 200px;max-height:200px;" id="preview">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button class="layui-btn" lay-filter="update" lay-submit="">
+                Update
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form','layer', 'laydate','upload'], function(){
+        $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer
+            ,upload = layui.upload;
+        getAllType(function(){
+            layui.form.render('select')
+        });
+        //listening submit
+        form.on('submit(update)', function(data){
+            console.log(data.field)
+            $.ajax({
+                url:"/menu/update",
+                type:"POST",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify(data.field),
+                dataType:'json',
+                success:function(result){
+                    if(result.code == 500 || result.code == 5000100 || result.code == 5000101 || result.code == 5000102){
+                        layer.alert(result.msg);
+                    }else{
+                        layer.alert("Setup successful", {icon: 6},function () {
+                            //close frame
+                            xadmin.close();
+                            // refresh father window
+                            xadmin.father_reload();
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+        upload.render({
+            elem: '#upload',
+            url: '/menu/upload',
+            accept: 'file',
+
+            before: function () {
+            },
+
+            choose: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#preview').attr('src', result);
+                })
+            },
+            //successful
+            done: function (res) {
+                if(res.code == 200){
+                    layer.alert('Upload successful！' ,{icon:6});
+                    $("input[name='dishImage']").val("/image/"+res.data.dishImage);
+                }
+            },
+            //fail
+            error: function (index, upload) {
+                layer.alert('Upload failed！' + index);
+            }
+        });
+        function getAllType(callback) {
+            var typeId = $("#typeId").val()*1;
+            $.ajax({
+                url: '/dishType/getAll',
+                type: 'get',
+                success: function (res) {
+                    if (res.data) {
+                        let str = "<option value=''>Select type</option>";
+                        for (let i of res.data) {
+
+                            if(typeId == i.typeId) {
+                                str += `<option value='${i.typeId}' selected="selected">${i.typeName}</option>`;
+                            }else {
+                                str += `<option value='${i.typeId}'>${i.typeName}</option>`;
+                            }
+                        }
+                        //jquery value
+                        $("#selectType").html(str);
+                        callback();
+                    }
+                }
+            })
+        }
+    });
+</script>
+</body>
+</html>

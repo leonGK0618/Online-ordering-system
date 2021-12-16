@@ -1,0 +1,135 @@
+/*---------------------------
+ * 购物车
+ * --------------------*/
+
+.red{color: #e12e2e;}
+.orange, a.orange{ color: #ff6700;}
+header .edit-tit{font-size: 16px;color: #666;font-family: "Microsoft Yahei"; line-height: 56px; margin-right: 10px;position: relative;z-index: 9;}
+.mui-content .card-title{background-color: #F8F8F8;margin-top: 12px;border-top: 1px solid #ddd;}
+.card-view .mui-table-view-cell>a:not(.mui-btn){ margin: -11px 15px -11px 0; left: 30px;}
+.card-left input{right: inherit; left: 0;top: 30px;}
+.card-view .card-right .title{color: #333;}
+.mr-10{margin-right: 10px;}
+.card-view .card-right .txt{height: 24px;font-size: 12px;}
+.card-view .card-right span.fl{width: 80%;}
+.card-view .card-right span.fl span{width: 48%;}
+.card-view .card-right span em{color: #ccc;padding: 0 4px;}
+.card-view .card-right .actions{width: 100%;overflow: hidden;}
+.mui-numbox{width: 94px;height: 32px;float: right; padding: 0 30px;}
+.mui-numbox [class*=btn-numbox], .mui-numbox [class*=numbox-btn]{width: 30px;}
+.card-view .card-right .actions span{line-height: 32px;}
+.mui-table-view-cell:after{left: 0;}
+.login-tit{ background: #FFFDD9; line-height: 30px;font-size: 14px; text-align: center; border-bottom: 1px solid #EFF2F5; width: 100%; margin: 0 auto; display: block;}
+.login_btn{ background: #f44263; color: #fff; padding: 2px 8px; border-radius: 3px; margin-left: 5px;}
+.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color: #f44623;}
+.mui-table-view-cell{padding: 12px;}
+.mui-table-view .mui-media-object{ line-height: 60px; max-width: 60px; height: 60px;}
+.card-view .mui-table-view-cell>a:not(.mui-btn){left: 12px;margin: -11px 5px -11px 0;}
+.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{font-size: 20px;}
+.mui-table-view-cell p{color: #666;font-size: 12px;}
+.mui-table-view-cell p.gift em{color: #999;}
+.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]{ left: 12px;top: 8px;}
+.mui-checkbox.mui-left label, .mui-radio.mui-left label{padding-left: 38px;}
+.jiuji-service span{float: left; display: inline-block; line-height: 20px; font-size: 12px; padding: 4px 8px; border: solid 1px #dfdfdf; margin-top: 5px;margin-right: 5px; border-radius: 2px; text-decoration: none;}
+.jiuji-service span.cur{ background: #8fd14c; color: #fff; border-color: #8fd14c;}
+.jiuji-service span em{ color: #ff6700;}
+.jiuji-service span.cur em{ color: #fff;}
+.jiuji-service span i{ display: inline-block; width: 16px; height: 17px; vertical-align: middle; margin-right: 4px; position: relative; bottom: 1px; background: url(//img2.ch999img.com/static/images/m/order/server-icon.png?v=1) no-repeat center top; background-size: 18px;}
+.jiuji-service span.cur i{ background-position: -1px -18px;}
+.tuijian li{ line-height: 50px; padding: 0 50px 0 10px; display: block; position: relative; border-bottom: 1px solid #f1f1f1; overflow: hidden;}
+.tuijian li span{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; position: absolute;left: 40px;width: 56%;}
+.tuijian li em{ float: right; color: #f60; margin-right: 15px;}
+.tuijian li i{ font-family: "宋体"; position: absolute; right: 0; font-size: 14px; width: 50px; text-align: center;}
+.color_default i{ color: #e1e1e1;}
+.color_sel i{ color: #3caaff;}
+.tuijian li .card-left{top: 10px;}
+
+/*结算*/
+
+.relative{ position: relative;}
+.absolute{ position: absolute;}
+.cart-tmpl-box{ position: fixed; bottom: 0; width: 100%; max-width: 640px; margin: 0 auto; background: #f9f9f9; height: 50px; border-top: 1px solid #e7e7e7;}
+.cart_btn{ padding: 7px 37% 7px 22%; font-size: 12px; line-height: 18px;}
+.operation{ right: 0; top: 0; width: 40%; height: 50px; line-height: 50px; text-align: center; overflow: hidden;}
+.operation a{ color: #fff; float: left;}
+.edit-status a{ text-align: center; float: left; line-height: 50px; padding: 0 20px; color: #fff;}
+.orange-yellow-bg{ background-color: #27A9E3;}
+.orange-bg{ background-color: #222;}
+
+/*---------------------------
+ * 提交订单
+ * --------------------*/
+
+.orderBox .step1{width: 100%; position: relative; top: 0; background-color: #fff; padding: 14px 13px 12px 10px;}
+.orderBox .step1 .s1-borderB{ position: absolute; bottom: 1px; left: 0; height: 3px; width: 100%; background: url(../images/location-border.png) repeat-x; background-size: 80px 4px;}
+.orderBox .s-point{ position: absolute; right: 10px; top: 50%; margin-top: -0.5em;}
+.orderBox .step1 .step1-in .mt_new{ padding: 0 0 10px 0; overflow: hidden; color: #252525;}
+.orderBox .step1 .s1-name{ float: left; font-size: 1em; color: #252525; font-weight: bold; margin-left: 23px;}
+.orderBox .step1 .s1-phone{ float: left; font-size: 1em; font-weight: bold;margin-left: 2.6em;}
+.orderBox .s1-default{ float: left; height: 15px; width: 38px; height: 20px; line-height: 20px; color: #fff; background-color: #f23030; font-size: 12px; text-align: center; margin-left: 14px;}
+.orderBox .step1 .step1-in .mc{ font-size: 14px; color: #232326; line-height: 22px; position: relative;}
+.orderBox .step1 .step1-in-con{ padding-right: 10px; padding-left: 23px;}
+.orderBox .step1 .step1-in-con i{position: absolute; top: 1px; left: 0;color: #666;}
+.orderBox .middle-box{ overflow: hidden; margin-top: 10px;position: relative;border-bottom: 1px solid #e3e5e9;}
+.orderBox .step3{ overflow: hidden; background-color: #fff; padding-left: 12px; border-top: 1px solid #e3e5e9;}
+.orderBox .s-item{ position: relative; padding: 18px 28px 18px 0; line-height: 1.2em; overflow: hidden;}
+.orderBox .change-p1{ padding-top: 18px;}
+.orderBox .step3 .sitem-l{ width: 68.4375%; padding-right: 2.5%; float: left; text-align: center;overflow: hidden;}
+.orderBox .change-p1 .change-h1{ height: 71px; padding-left: 0;}
+.orderBox .step3 .sitem-l .sl-img{ width: 3.125em; height: 71px; float: left; margin-right: 7px;}
+.orderBox .change-p1 .change-h1 p{ font-size: 12px; display: block; height: 12px; color: #848689; width: 50px; text-align: center; margin-top: 6px;}
+.orderBox .step3 .sitem-r{ float: right; color: #252525; font-size: 14px; margin-top: 25px; padding-top: 0;}
+.potive{position: relative;}
+.potive .pay-item{ display: block; padding: 10px 18px 10px 0; position: relative;overflow: hidden;}
+.potive .pay-deliver-title{ font-size: 15px; line-height: 34px; position: absolute; top: 50%; left: 0; height: 30px; margin-top: -15px; color: #262629;}
+.potive .pay-deliver-way{ width: 100%; font-size: 13px; line-height: 22px; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 100px; text-align: right; color: #252525; display: inline; float: right;margin-right: 10px;}
+.potive .pay-way,.potive .deliver-way{ font-size: 14px; color: #232326; display: block;}
+.deliver-time{ background-color: #fff; display: block; margin-bottom: 5px;float: right;padding: 0 17px 10px 0;}
+.deliver-time i{color: #FF2D55;margin-right: 6px;}
+.sitem-tip{ padding: 2px 8px; background: #f23030; color: #fff;font-size: 12px; font-style: normal;}
+.yhjBox .potive p span{display: block;line-height: 30px;}
+.yhjBox .potive .s-point{ margin-top: -11px;}
+.jd-con{padding: 12px 0;}
+.jd-con p:first-child{color: #333;margin-bottom: 5px;}
+.order_payList{border: 1px solid #e3e5e9;border-width: 1px 0; margin-top: 10px;padding: 5px 0; overflow: hidden; background-color: #fff;}
+.order_payList li{height: 32px;line-height: 32px;padding: 0 12px;}
+.order_payList li .sitem-l{float: left;}
+.order_payList li .sitem-r{float: right;color: #ff6700;}
+.pay-bar,.pay_btn{position: fixed;bottom: 0;background: #fff; width: 100%; max-width: 640px; height: 54px; line-height: 54px; text-align: center;}
+.pay-bar .payb-con{text-align: right;float: left;line-height: 54px; width: 62.5%; padding-right: 13px;}
+.pay-bar .payb-con span{display: inline-block;color: #ff6700;}
+.pay-bar .jsbtn{ display: block; width: 35.5%; color: #fff; text-align: center; height: 54px; line-height: 54px;}
+
+/*---------------------------
+ * 收货地址
+ * --------------------*/
+
+.icon-goux{ position: absolute; top: 24px; left: 4px; display: inline-block; width: 24px; height: 24px; background: url(../images/icon.png) no-repeat; background-size: 100%; background-position: 4px -79px;}
+.addressBox li h4{line-height: 24px;margin-bottom: 10px;font-weight: normal;}
+.addressBox li h4 strong{font-size: 14px;font-weight: normal;padding: 0 10px;}
+.edit_ico{border-left: 1px solid #d9d9d9;width: 40px;height: 34px;line-height: 34px;font-size: 26px;display: inline-block; color: #999; position: absolute; right: 0; top: 10px;}
+.add_btn{ width: 87.81%; background: #f23030; color: #fff; display: inline-block; border-radius: 2px; height: 36px; line-height: 36px; text-align: center; font-size: 15px;}
+.add_btn:hover{color: #fff;background: #e42323;}
+
+/*---------------------------
+ * 编辑收货地址
+ * --------------------*/
+
+.editAds_box .mui-input-row{padding: 10px 0;height: auto;}
+.editAds_box .mui-input-row label{width: 35%;text-align: right;font-family: "微软雅黑";}
+.editAds_box .mui-input-row label~input{width: 65%;color: #333;}
+.posi_r{position: absolute;right: 10px;top: 18px;}
+.editAds_box .mui-input-row .txt{line-height: 40px;}
+.mui-switch.mui-active{background: #f23030;border-color: #27A9E3;}
+.mui-btn-blue, .mui-btn-primary, input[type=submit]{ border: 1px solid #27A9E3; background-color: #27A9E3;}
+
+/*删除弹窗*/
+
+.popup-w{ width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); position: absolute; top: 0; left: 0; z-index: 999; }
+.confirm-w{ position: absolute;top: 50%; margin-top: -100px; width: 100%;  z-index: 1000; left: 0;}
+.confirm-w .confirm{ width: 85%; background: #f8f8f8; padding: 20px; text-align: center; margin: 0 auto; border-radius: 6px; max-width: 640px; font-size: 14px;}
+.confirm-w .confirm .confirm-txt{ padding-bottom: 22px; font-size: 15px; color: #4d4d4d; line-height: 20px;}
+.confirm-w .confirm .confirm-btn{ padding: 0 0 10px;overflow: hidden;}
+.btn2{ float: left; width: 45%; border: 1px solid #e0e0e0; background: #fff; border-radius: 2px; height: 36px; line-height: 36px; color: #686868; text-align: center; font-size: 15px;}
+.ctn02{ float: right; color: #fff; background: #f35656; border: 1px solid #f35656;}
+.btn2:hover{background: #e42323;color: #fff;}

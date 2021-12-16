@@ -1,0 +1,119 @@
+body {
+	font-size: 11px;
+}
+
+.mui-input-clear {
+	background-color: #fff;
+}
+
+.mui-active {
+	background-color: #fff;
+}
+.menu-image{
+	line-height: 140px !important;
+	max-width: 140px !important;
+	height: 140px !important;
+}
+.title {
+	background-color: #222;
+}
+
+.bt {
+	font-size: 0.8rem;
+	color: white;
+	line-height: 30px;
+	height: 30px;
+	text-align: center;
+	border-left: 1px #ccc solid;
+}
+
+.price {
+	color: #FF3F28;
+	float: left;
+}
+
+.mui-table-view:before {
+	height: 0px !important;
+}
+
+.mui-table-view:after {
+	height: 0px !important;
+}
+
+.zushi {
+	font-size: 0.8rem;
+	float: left;
+	overflow: hidden;
+	/*Overflow hide*/
+	text-overflow: ellipsis;
+
+	white-space: nowrap;
+
+}
+
+.mui-media-body {
+	text-align: left;
+}
+
+.zuanqu {
+	background-color: #fff;
+	height: 4rem;
+	margin-top: 0.8rem;
+	margin-bottom: 0.4rem;
+	width: 31%;
+	display: flex;
+	justify-content: center;
+	border-radius: 3px;
+}
+
+.zuanqu span {
+	margin: auto 0;
+}
+
+.mui-grid-view.mui-grid-9 {
+	background-color: #fff;
+}
+.mui-grid-view.mui-grid-9 .mui-table-view-cell{
+	border-bottom: 0px solid #eee;
+}
+.bor{
+	/*border-right: 5px #eee solid !important;*/
+	width: calc((100% - 0.3rem * 2)/3);
+	margin-right: 0.3rem !important;
+	background-color: #fff;
+	height: 100%;
+}
+ .bor:nth-child(3n) {
+    margin-right: 0 !important;
+  }
+
+  .product-list{
+  	width: 75%;
+	margin-right: 0.3rem !important;
+	background-color: #fff;
+  }
+  .product-list:nth-child(2n) {
+    margin-right: 0 !important;
+  }
+.mui-search{
+	margin: 0.7rem 0rem 0.7rem 0rem;
+}
+.footer {
+  height: 2rem;
+  width: 100%;
+  /*padding: 1rem;*/
+  box-sizing: border-box;
+  text-align: center;
+  color: grey;
+}
+.center{
+	text-align: center;
+	margin: auto !important;
+}
+.bor a{
+	padding: 0 !important;
+    height: 100%;
+    display: flex !important;
+}
+
+

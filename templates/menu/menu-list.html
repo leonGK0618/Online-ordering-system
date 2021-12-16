@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Dish list</title>
+        <header th:replace="header::html"></header>
+    </head>
+    <body>
+        <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">Home</a>
+            <a href="">Dish</a>
+              <a>
+                <cite>Dish management</cite></a>
+          </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="Refresh">
+                <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+
+        <div class="layui-fluid">
+            <div class="layui-row  layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <form class="layui-form  layui-col-space5">
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="dishName"  placeholder="Dish name" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <select id="selectType" name="typeId" lay-filter="type">
+                                        <option value="-1">Select</option>
+                                    </select>
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn"  lay-submit="" lay-filter="search"><i class="layui-icon">&#xe615;</i></button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="layui-card-header">
+                            <button class="layui-btn" onclick="xadmin.open('Add dish','/menu/add')" permission="sys:type:add"><i class="layui-icon"></i>Add</button>
+                        </div>
+
+                        <div class="layui-card-body ">
+                            <table class="layui-hide" id="table" lay-filter="test"></table>
+                        </div>
+
+                        <div class="layui-card-body ">
+                            <script type="text/html" id="barDemo">
+                                <a class="layui-btn layui-btn-xs" lay-event="edit">Edit</a>
+                                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Delete</a>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table,
+                form = layui.form;
+            getAllType(function(){
+                layui.form.render('select')
+            });
+            table.render({
+                elem: '#table'
+                ,url: '/menu/list' //data interface
+                ,page: true //open new page
+                ,response: {
+                    countName: 'count', //default：count
+                    dataName: 'datas' //default：data
+                }
+                ,cols: [
+                    [ //table header
+                        ,{field: 'dishId', title: 'ID', width: 80, align: 'center'}
+                        ,{field: 'dishName', title: 'Name',width: 160,align: 'center'}
+                        ,{field: 'typeName', title: 'Type',width: 100,align: 'center'}
+                        ,{field: 'introduction', title: 'Description',width: 180,align: 'center'}
+                        ,{field: 'dishImage', title: 'Image', align:'center', templet:'<div><img src="{{d.dishImage}}"></div>'}
+                        ,{field: 'price', title: 'Price',width: 100,align: 'center'}
+                        ,{title:'Confirm', toolbar: '#barDemo',align: 'center'}
+                    ]
+                ],
+                done:function (res) {
+                    $('.layui-table-body').find('.layui-table-cell').css('height','100%')
+                    $('.layui-table-body').find('.layui-table-cell').css('display','flex')
+                    $('.layui-table-body').find('.layui-table-cell').css('align-items','center')
+                    $('.layui-table-body').find('.layui-table-cell').css('justify-content','center')
+                    $('.layui-table-body').find('.layui-table').css('height','100%')
+                }
+            });
+            //listening tool
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'del'){
+                    layer.confirm('Delete confirm?', function(index){
+                        $.ajax({
+                            url:`/menu/delete/${data.dishId}`,
+                            type:"GET",
+                            dataType:'json',
+                            success:function(result){
+                                if(result.code == 500 || result.code == 5000201 || result.code == 5000101 || result.code == 5000102){
+                                    layer.alert(result.msg);
+                                }else {
+                                    layer.alert("Delete successful", {icon: 1}, function (index1) {
+                                        layer.close(index1);
+                                        //xadmin.father_reload();//refresh page
+                                        table.reload("table");
+                                    });
+                                }
+                            },
+                        });
+
+                    });
+                } else if(obj.event === 'edit'){
+                    xadmin.open('Edit equipment information',`/menu/edit/${data.dishId}`);
+                }
+            });
+            //listening submit
+            form.on('submit(search)', function(data){
+                var dishName = data.field.dishName;
+                var typeId = data.field.typeId;
+                table.render({
+                    elem: '#table'
+                    ,url: '/menu/findMenuByFuzzyName' //data interface
+                    ,page: true
+                    ,where:{
+                        "dishName":dishName,
+                        "typeId":typeId,
+                    }
+                    ,response: {
+                        countName: 'count',
+                        dataName: 'datas'
+                    }
+                    ,cols: [
+                        [ //table header
+                            ,{field: 'dishId', title: 'ID', width: 80, align: 'center'}
+                            ,{field: 'dishName', title: 'Name',width: 180,align: 'center'}
+                            ,{field: 'typeName', title: 'Type',width: 180,align: 'center'}
+                            ,{field: 'introduction', title: 'Description',width: 180,align: 'center'}
+                            ,{field: 'dishImage', title: 'Image', align:'center', templet:'<div><img src="{{d.dishImage}}"></div>'}
+                            ,{field: 'price', title: 'Price',width: 180,align: 'center'}
+                            ,{title:'Confirm', toolbar: '#barDemo',align: 'center'}
+                        ]
+                    ],
+                    done:function (res) {
+                        $('.layui-table-body').find('.layui-table-cell').css('height','100%')
+                        $('.layui-table-body').find('.layui-table-cell').css('display','flex')
+                        $('.layui-table-body').find('.layui-table-cell').css('align-items','center')
+                        $('.layui-table-body').find('.layui-table-cell').css('justify-content','center')
+                        $('.layui-table-body').find('.layui-table').css('height','100%')
+                    }
+                });
+                return false;
+            });
+            function getAllType(callback) {
+                $.ajax({
+                    url: '/dishType/getAll',
+                    type: 'get',
+                    success: function (res) {
+                        if (res.data) {
+                            let str = "<option value=''>Select type</option>";
+                            for (let i of res.data) {
+                                //manage data
+                                str += `<option value='${i.typeId}'>${i.typeName}</option>`;
+                            }
+                            //jquery value
+                            $("#selectType").html(str);
+                            callback();
+                        }
+                    }
+                })
+            }
+        });
+    </script>
+
+</html>
