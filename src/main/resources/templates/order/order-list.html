@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Order list</title>
+        <header th:replace="header::html"></header>
+    </head>
+    <body>
+        <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">Home</a>
+            <a href="">Order</a>
+              <a>
+                <cite>Order</cite></a>
+          </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="Refresh">
+                <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+
+        <div class="layui-fluid">
+            <div class="layui-row  layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <table class="layui-hide" id="table" lay-filter="test"></table>
+                        </div>
+                        <div class="layui-card-body ">
+                            <script type="text/html" id="barDemo">
+                                <a class="layui-btn layui-btn-xs" lay-event="detail">Detail</a>
+                                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">Delete</a>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table,
+                form = layui.form;
+            table.render({
+                elem: '#table'
+                ,url: '/order/list' //data interface
+                ,page: true //open new page
+                ,response: {
+                    countName: 'count',
+                    dataName: 'datas'
+                }
+                ,cols: [
+                    [ //table header
+                        ,{field: 'orderId', title: 'ID', width: 80, align: 'center'}
+                        ,{field: 'time', title: 'Time',width: 180,align: 'center'}
+                        ,{field: 'subtotal', title:'Total' ,width: 180,align: 'center',templet:'<p>￡{{d.subtotal}}</p>'}
+                        ,{field: 'tableNumber', title: 'Table',width: 180,align: 'center',templet:'<p>No.{{d.tableNumber}}</p>'}
+                        ,{field: 'username', title: 'Name', align:'center'}
+                        ,{field: 'status', title: 'Paid', align:'center'}
+                        ,{title:'Confirm', toolbar: '#barDemo',align: 'center'}
+                    ]
+                ],
+                done:function (res) {
+                    $('.layui-table-body').find('.layui-table-cell').css('height','100%')
+                    $('.layui-table-body').find('.layui-table-cell').css('display','flex')
+                    $('.layui-table-body').find('.layui-table-cell').css('align-items','center')
+                    $('.layui-table-body').find('.layui-table-cell').css('justify-content','center')
+                    $('.layui-table-body').find('.layui-table').css('height','100%')
+                }
+            });
+            //listening tool
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'del'){
+                    layer.confirm('Delete confirm?', function(index){
+                        $.ajax({
+                            url:`/order/delete/${data.orderId}`,
+                            type:"GET",
+                            dataType:'json',
+                            success:function(result){
+                                if(result.code == 500 || result.code == 5000201 || result.code == 5000101 || result.code == 5000102){
+                                    layer.alert(result.msg);
+                                }else {
+                                    layer.alert("Delete successful", {icon: 1}, function (index1) {
+                                        layer.close(index1);
+                                        //xadmin.father_reload();//refresh whole page
+                                        table.reload("table");
+                                    });
+                                }
+                            },
+                        });
+
+                    });
+                } else if(obj.event === 'detail'){
+                    xadmin.open('Detail',`/order/detail/${data.orderId}`);
+                }
+            });
+        });
+    </script>
+
+</html>

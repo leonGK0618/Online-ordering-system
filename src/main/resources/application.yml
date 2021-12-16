@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Orderdish?useSSL=false&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: database
+    platform: mysql
+    #The default connection pool is HikariCP, replaced here with Druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 1
+      min-idle: 3
+      max-active: 20
+      #Configure get connection wait time
+      max-wait: 60000
+      #Configure how often to detect idle connections that need to be closed, in milliseconds
+      time-between-eviction-runs-millis: 60000
+      #Minimum time for a connection to survive in the pool, in milliseconds
+      min-evictable-idle-time-millis: 30000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      stat-view-servlet:
+        enabled: true
+  profiles:
+    active: dev
+logging:
+  path:D:/demolog
+mybatis:
+  mapper-locations: classpath:/mybatis-mappers/*
+  type-aliases-package: com.music.model
+  configuration:
+    map-underscore-to-camel-case: true
+
+api-url: /api
+server:
+  port: 8080

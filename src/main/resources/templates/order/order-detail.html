@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order detail</title>
+    <header th:replace="header::html"></header>
+</head>
+
+<body>
+<div class="x-body" style="width:50%;height:50%;margin:100px auto;border: 1px solid #3a3a3a;padding: 30px 0 30px 0;border-radius: 5px">
+    <div class="layui-form" th:each="order:${orderDetails}">
+        <div class="layui-form-item">
+            <label for="dishName" class="layui-form-label">
+                Name
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="dishName" name="dishName" lay-verify="required" disabled th:value="${order.dishName}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="price" class="layui-form-label">
+               Price
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="price" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" disabled  th:value="${order.price}" name="price" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <div style="width:200px;height:200px;border:3px solid #0099CC;border-radius: 5px;padding: 3px;">
+                    <img th:src="${order.dishImage}" style="max-width: 200px;max-height:200px;" id="preview">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="number" class="layui-form-label">
+                Quantity
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="number" onkeyup="value=value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1')" disabled  th:value="${order.dishQuantity}" name="number" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+</script>
+</body>
+</html>

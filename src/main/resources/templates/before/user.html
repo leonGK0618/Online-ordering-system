@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Contact information</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link th:href="@{/before/mui.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" th:href="@{/before/index.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/before/iconfont.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/before/common.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/before/cart.css}" />
+		<style>
+			.area{ margin: 20px auto 0px auto;}
+			.mui-input-group{ margin-top: 10px;}
+			.mui-input-group:first-child{ margin-top: 20px;}
+			.mui-input-group label{ width: 22%;}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{ width: 78%;}
+			.mui-checkbox input[type=checkbox], .mui-radio input[type=radio]{ top: 6px;}
+			.mui-content-padded{ margin-top: 25px;}
+			.mui-btn{ padding: 10px;}
+			.link-area{ display: block; margin-top: 25px; text-align: center;}
+			.spliter{ color: #bbb; padding: 0px 8px;}
+			.oauth-area{ position: absolute; bottom: 20px; left: 0px; text-align: center; width: 100%; padding: 0px; margin: 0px;}
+			.oauth-area .oauth-btn{ display: inline-block; width: 50px; height: 50px; background-size: 30px 30px; background-position: center center; background-repeat: no-repeat; margin: 0px 20px;
+				border: solid 1px #ddd; border-radius: 25px;}
+			.oauth-area .oauth-btn:active{ border: solid 1px #aaa;}
+			.oauth-area .oauth-btn.disabled{ background-color: #ddd;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg_fff">
+			<h1 class="mui-title">Contact information</h1>
+		</header>
+
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>Name</label>
+					<input id='username' name="username" type="text" class="mui-input-clear mui-input" placeholder="Your name">
+				</div>
+				<div class="mui-input-row">
+					<label>Phone</label>
+					<input id="phone" name="phone" class="mui-input-clear mui-input" placeholder="Contact number">
+				</div>
+			</form>
+		</div>
+		<div class="cart-tmpl-box">
+			<div class="relative">
+				<div class="js-status">
+					<div class="cart_btn">
+						<p><em>Total：</em><b class="orange" id="total" data-price="1150" style="font-size:14px;">0</b></p>
+						<p class="grey-9">You select<b class="orange" id="menuNum"> 0 </b>item.</p>
+					</div>
+					<div class="operation absolute">
+						<a href="javascript:;" onclick="addUserWithOrder()" class="jsbtn orange-bg" style="width:56%">Check out</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script th:src="@{/before/js/mui.min.js}"></script>
+		<script th:src="@{/before/js/jquery-1.3.2.min.js}"></script>
+	</body>
+<script>
+	$(document).ready(function(){
+		const order = JSON.parse(localStorage.getItem("order"));
+		$("#menuNum").text(order.length)
+		let total = 0;
+		order.forEach(item=>{
+			total = total+parseFloat(item.price)*parseInt(item.number);
+		})
+		$("#total").text('￥'+total);
+	});
+	function addUserWithOrder() {
+		let order = localStorage.getItem("order");
+		order = JSON.parse(order);
+		if(!order||order.length == 0) {
+			alert("Please select the product first!")
+			return
+		}
+		const username = $("#username").val();
+		const phone = $("#phone").val();
+		if(username == null||phone == null){
+			alert("Please enter full information");
+			return;
+		}
+		const user = {username,phone};
+		$.ajax({
+			url: "/before/UserLogin",
+			type: "POST",
+			data: user,
+			success:function (data) {
+				const jsonData = JSON.parse(data);
+				debugger
+				if(jsonData.userId){
+					$.ajax({
+						url: "/before/addUserWithOrder/"+jsonData.userId,
+						type: "POST",
+						dataType: 'json',
+						contentType:"application/json;charset=UTF-8",
+						data:JSON.stringify(order),
+						success:function (data2) {
+						}
+					})
+				}
+				location.href = '/before/order/'+jsonData.userId;
+			}
+		})
+	}
+</script>
+</html>
