@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title></title>
+	<link th:href="@{/before/mui.min.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/index.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/fonts/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/iconfont.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/common.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/before/cart.css}" />
+</head>
+
+<body>
+<div class="mui-content">
+	<div class="mui-row title">
+		<div class="mui-col-xs-6">
+			<a class="mui-icon iconfont icon-fanhui mui-pull-left" href="javascript:history.back();void(0)"></a>
+		</div>
+		<div class="mui-col-xs-2 bt" onclick="location.href = '/before/index'">
+			Home
+		</div>
+		<div class="mui-col-xs-2 bt">
+			Order
+		</div>
+		<div class="mui-col-xs-2 bt">
+			Contact
+		</div>
+	</div>
+	<div class="mui-content" th:each="menu:${menuList}">
+		<ul id="OA_task" class="mui-table-view card-view mb10" style="border-bottom: 1px solid #ddd;">
+			<li class="mui-table-view-cell mui-media">
+				<div class="mui-slider-handle">
+					<div class="card-right">
+						<img class="mui-media-object mui-pull-left menu-image" th:src="${menu.dishImage}"/>
+						<div class="mui-media-body">
+							<p class="mui-ellipsis-2 tit" style="font-size: 20px" th:text="${menu.dishName}">Coke</p>
+							<div class="actions"><span class="red" style="margin-top: 20px" th:text="${menu.price}">3</span>
+								<div class="mui-numbox" data-numbox-min="0" style="line-height: 30px">
+									<button class="mui-btn mui-btn-numbox-minus" type="button" th:onclick="'dec('+${menu.dishId}+');'">-</button>
+									<input class="mui-input-numbox" th:id="num+${menu.dishId}" type="number" th:onchange="'change('+${menu.dishId}+','+${menu.price}+')'"/>
+									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="cart-tmpl-box">
+		<div class="relative">
+			<div class="js-status">
+				<div class="cart_btn">
+					<p><em>Total：</em><b class="orange" id="total" data-price="1150" style="font-size:14px;">0</b></p>
+					<p class="grey-9">You have <b class="orange" id="menuNum">  0 </b>items.</p>
+				</div>
+				<div class="operation absolute">
+					<a href="javascript:;" onclick="addUserWithOrder()" class="jsbtn orange-bg" style="width:56%">Check out</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:src="@{/before/js/mui.min.js}"></script>
+<script th:src="@{/before/js/jquery-1.3.2.min.js}"></script>
+</body>
+<script>
+	$(document).ready(function(){
+		const order = JSON.parse(localStorage.getItem("order"));
+		$("#menuNum").text(order.length)
+		let total = 0;
+		order.forEach(item=>{
+			total = total+parseFloat(item.price)*parseInt(item.number);
+			$("#num"+item.id).val(item.number);
+		})
+		$("#total").text('￡'+total);
+	});
+	function change(id,price) {
+		let order = localStorage.getItem("order");
+		if(!order){
+			order = [];
+			localStorage.setItem("order",JSON.stringify(order));
+		}
+		order =localStorage.getItem("order");
+		order = JSON.parse(order);
+		const num = event.currentTarget.value*1
+		let flag;
+		order.forEach(item=>{
+			if(item.id == id){
+				if(num == 0){
+					order.splice(item,1);
+				}else {
+					item.number = num;
+				}
+				flag = true;
+			}
+		})
+		if(!flag){
+			order.push({id,price,number:num})
+		}
+		localStorage.setItem("order",JSON.stringify(order));
+		$("#menuNum").text(order.length)
+		let total = 0;
+		order.forEach(item=>{
+		  total = total+parseFloat(item.price)*parseInt(item.number);
+		})
+		$("#total").text('￡'+total);
+	}
+	function addUserWithOrder() {
+		let order = localStorage.getItem("order");
+		if(!order||JSON.parse(order).length == 0){
+			alert("Please select the product first!")
+			return
+		}else {
+			location.href = '/before/addUser';
+		}
+	}
+</script>
+</html>

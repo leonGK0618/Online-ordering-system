@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Management</title>
+<header th:replace="header::html"></header>
+<link rel="stylesheet" th:href="@{/xadmin/css/login.css}" />
+</head>
+<body class="login-bg">
+
+	<div class="login">
+		<div class="message">Admin login</div>
+		<div id="darkbannerwrap"></div>
+        <form action="/login" id="login-form" class="layui-form" method="post">
+			<input id="username" name="adminUsername" placeholder="Username" type="text" autocomplete="off">
+			<hr class="hr15">
+			<input id="password" name="adminPassword" placeholder="Password" type="password" autocomplete="off">
+			<hr class="hr15">
+			<hr class="hr15">
+            <input style="width: 100%;" lay-submit lay-filter="login" type="submit" value="Login">
+			<hr class="hr20">
+			<span id="info" style="color: red"></span>
+		</form>
+	</div>
+</body>
+<script type="text/javascript">
+    $(function  () {
+        layui.use('form', function(){
+            var form = layui.form;
+            //listening submit
+            form.on('submit(login)', function(data){
+                $.ajax({
+					type : 'post',
+					url : '/login',
+					data : $("#login-form").serialize(),
+					success : function(data) {
+						if(data != null && data.code == 200){
+							layer.msg("Login successful",{time:500},function(){
+								localStorage.setItem("username",data.data.adminUsername);
+								location.href='/'
+							});
+						}else if(data.code == 500){
+							layer.msg("Login failed");
+							$("#info").html(data.msg)
+						} else{
+							layer.msg("Login error, please contact the administrator");
+						}
+					},
+					error : function(xhr, textStatus, errorThrown) {
+						var msg = xhr.responseText;
+						var response = JSON.parse(msg);
+						layer.msg(response.message);
+					}
+				});
+                return false;
+            });
+        });
+    })
+</script>
+</html>

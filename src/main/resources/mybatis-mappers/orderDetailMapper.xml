@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- order_detail -->
+<mapper namespace="com.orderdish.dao.OrderDetailDao">
+
+    <!-- 字段映射 -->
+    <resultMap id="orderDetailMap" type="com.orderdish.model.OrderDetail">
+        <id column="detail_id" property="detailId" jdbcType="INTEGER" />
+        <result column="dish_id" property="dishId" jdbcType="INTEGER" />
+        <result column="dish_quantity" property="dishQuantity" jdbcType="INTEGER" />
+        <result column="orderId" property="orderId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!-- 表查询字段 -->
+    <sql id="allColumns">
+        od.detail_id, od.dish_id, od.dish_quantity, od.orderId
+    </sql>
+
+    <!-- 新增信息 -->
+    <insert id="save">
+        INSERT INTO order_detail (
+         dish_id, dish_quantity, order_id
+        ) VALUES (
+            #{dishId},
+            #{dishQuantity},
+            #{orderId}
+        )
+    </insert>
+    <!-- 根据主键删除 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM order_detail WHERE order_id = #{id}
+    </delete>
+
+</mapper>
